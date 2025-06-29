@@ -17,24 +17,28 @@ body {
 h1 {
     text-align: center;
     color: #333;
+    font-size: 1.8rem;
 }
 
 .camera-container {
     position: relative;
     margin: 20px auto;
-    width: 640px;
-    height: 480px;
+    width: 100%;
+    max-width: 640px;
+    aspect-ratio: 4 / 3;
     border: 2px solid #ddd;
     border-radius: 4px;
     overflow: hidden;
+    background-color: black;
 }
 
 #video, #canvas {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
 }
 
 #canvas {
@@ -43,6 +47,7 @@ h1 {
 
 .controls {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
     margin-bottom: 20px;
@@ -56,6 +61,7 @@ button {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    min-width: 120px;
 }
 
 button:hover {
@@ -79,4 +85,32 @@ button:hover {
 #confidence-result {
     font-size: 18px;
     color: #666;
+}
+
+/* RESPONSIVE: para pantallas pequeñas */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    #emotion-result {
+        font-size: 20px;
+    }
+
+    #confidence-result {
+        font-size: 16px;
+    }
 }

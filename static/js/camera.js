@@ -33,36 +33,34 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    captureBtn.addEventListener('click', function(){
-        canvas.getContext('2d').drawImage(video, 0,0, canvas.width, canvas.height);
-        const imageData= canvas.toDataURL('image/png');
+    function analyzeFrame() {
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageData = canvas.toDataURL('image/png');
 
-        emotionResult.textContent = "Procesando...";
-        confidenceResult.textContent = " ";
-
-        fetch('/predict', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ image: imageData })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                emotionResult.textContent = "Error: " + data.error;
-                confidenceResult.textContent = "";
-            } else {
-                emotionResult.textContent = "Emoción: " + data.label;
-                confidenceResult.textContent = "Confianza: " + (data.confidence * 100).toFixed(2) + "%";
-            }
-        })
-        .catch(error => {
-            console.error("Error", error);
-            emotionResult.textContent = "Error al procesar la imagen";
+    fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: imageData })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            emotionResult.textContent = "Error: " + data.error;
             confidenceResult.textContent = "";
-        });
+        } else {
+            emotionResult.textContent = "Emoción: " + data.label;
+            confidenceResult.textContent = "Confianza: " + (data.confidence * 100).toFixed(2) + "%";
+        }
+    })
+    .catch(error => {
+        console.error("Error", error);
+        emotionResult.textContent = "Error al procesar la imagen";
+        confidenceResult.textContent = "";
     });
+}
+
+    setInterval(analyzeFrame, 2000);
+
 
     toggleCameraBtn.addEventListener('click', function() {
         facingMode = facingMode == "user" ? "environment" : "user";
