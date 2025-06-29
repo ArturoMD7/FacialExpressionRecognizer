@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconocimiento de Emociones</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Reconocimiento de Emociones Faciales</h1>
+        
+        <div class="camera-container">
+            <video id="video" width="640" height="480" autoplay></video>
+            <canvas id="canvas" width="640" height="480"></canvas>
+        </div>
+        
+        <div class="controls">
+            <button id="capture-btn">Capturar y Analizar</button>
+            <button id="toggle-camera-btn">Alternar Cámara</button>
+        </div>
+        
+        <div id="result">
+            <h2>Resultado:</h2>
+            <p id="emotion-result">Esperando análisis...</p>
+            <p id="confidence-result"></p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/camera.js') }}"></script>
+</body>
+</html>
